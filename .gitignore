@@ -5,7 +5,7 @@
 
 # R environment
 renv/activate.R
-
+renv/
 # OS files
 .DS_Store
 Thumbs.db
