@@ -1,0 +1,11 @@
+# R session and workspace
+.Rhistory
+.RData
+.Rproj.user/
+
+# R environment
+renv/activate.R
+
+# OS files
+.DS_Store
+Thumbs.db
