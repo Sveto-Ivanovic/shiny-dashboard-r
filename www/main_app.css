@@ -1,0 +1,28 @@
+
+#sidebar-table-choice-selectedDataset-label {
+  color: black;
+}
+
+#sidebar-table-choice-selectedType-label {
+  color: black;
+}
+
+th input[type="text"] {
+  background-color: #f3e8ff;
+  color: #4b0082;
+  border: 1px solid #d1b3ff; 
+  padding: 6px 10px;
+  border-radius: 4px;
+}
+
+ul[class="pagination"] {
+  display: flex;
+  list-style: none;
+  gap: 4px;
+  font-weight: bold;
+  padding: 1;
+  justify-content: center;
+}
+
+
+
