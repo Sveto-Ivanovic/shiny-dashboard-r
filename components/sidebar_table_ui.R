@@ -1,10 +1,10 @@
 sidebar_table_ui <- function(id, loaded_datasets) {
   ns <- NS(id)
   
-  page_sidebar(
-    title = "Select dataset:",
-    useShinyjs(),
+  layout_sidebar(
     sidebar = sidebar(
+      width = 250,
+      
       selectInput(
         ns("selectedDataset"),
         label = "Choose dataset",
@@ -18,6 +18,10 @@ sidebar_table_ui <- function(id, loaded_datasets) {
         selected = "all"
       )
     ),
-    dataTableOutput(ns("tableOutput1"))
+    
+    card(
+      card_header("Select dataset:"),
+      dataTableOutput(ns("tableOutput1"))
+    )
   )
 }

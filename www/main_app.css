@@ -8,7 +8,7 @@
 }
 
 th input[type="text"] {
-  background-color: #f3e8ff;
+  background-color: #15f4ee;
   color: #4b0082;
   border: 1px solid #d1b3ff; 
   padding: 6px 10px;
@@ -22,6 +22,97 @@ ul[class="pagination"] {
   font-weight: bold;
   padding: 1;
   justify-content: center;
+}
+
+ul[class="pagination"] li a {
+  background-color: #E6FFFF;
+}
+
+ul[id="page"] li a:hover {
+  color:  #E6FFFF;
+  background-color: #1F75FE;
+  border-radius: 8px;
+}
+
+ul[id="page"] li a[class="nav-link active"] {
+  color:  #E6FFFF !important;
+  background-color: #1F75FE;
+  border-radius: 8px;
+}
+
+span[class="logo"]{
+  padding-top: 8px !important;
+
+}
+
+
+.sidebar-toggle:hover {
+  color: blue !important;
+}
+.sidebar{
+  padding-top:20px;
+}
+
+#statistics-selectStatisticsDataset-label{
+  color:black;
+}
+
+#statistics-xselectionaxis1-label{
+  color:black;
+}
+
+#statistics-yselectionaxis1-label{
+  color:black;
+}
+
+#statistics-category2-label{
+  color:black;
+}
+
+#statistics-measure2-label{
+  color:black;
+}
+
+#statistics-aggregate2-label{
+  color:black;
+}
+
+.treeview{
+  padding-top: 20px;
+  
+}
+
+#report-category3-label{
+  color:black;
+}
+
+#report-file1-label{
+  color:black;
+}
+
+#report-measure3-label{
+  color:black;
+}
+
+#report-aggregate3-label{
+  color:black;
+}
+
+li[class="treeview"] a{
+  padding: 5px;
+  border: 2px solid lightblue;
+  border-radius: 16px;
+  width:100px;
+}
+
+
+
+.sidebar-toggle::before{
+  content:"<";
+}
+
+#sheet-uiOutputOperator .card-body {
+  overflow: visible;
 }
 
 

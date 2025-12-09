@@ -1,0 +1,105 @@
+---
+title: "TestReport"
+output: html_document
+params:
+  df: NULL
+  biggest_5_column_names: NULL
+  biggest_5_column_values: NULL
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+library(ggplot2)
+library(reactable)
+library(dplyr)
+```
+
+
+## Executive Summary
+
+This report provides an analysis of the aggregated data based on your selected category and measure.
+
+---
+
+## Top 5 Results
+
+The table below shows the top 5 entries based on the selected aggregation:
+```{r top5_table}
+if (!is.null(params$biggest_5_column_names) && !is.null(params$biggest_5_column_values)) {
+  top5_df <- data.frame(
+    Category = params$biggest_5_column_names,
+    Value = params$biggest_5_column_values
+  )
+  
+  # Check output format
+  if (knitr::is_html_output()) {
+    # Use reactable for HTML
+    reactable(
+      top5_df,
+      striped = TRUE,
+      highlight = TRUE,
+      bordered = TRUE,
+      showPageSizeOptions = TRUE,
+      filterable = TRUE,
+      theme = reactableTheme(
+        color = "hsl(233, 9%, 87%)",
+        backgroundColor = "hsl(233, 9%, 19%)",
+        borderColor = "hsl(233, 9%, 22%)",
+        stripedColor = "hsl(233, 12%, 22%)",
+        highlightColor = "hsl(233, 12%, 24%)",
+        inputStyle = list(backgroundColor = "hsl(233, 9%, 25%)"),
+        selectStyle = list(backgroundColor = "hsl(233, 9%, 25%)"),
+        pageButtonHoverStyle = list(backgroundColor = "hsl(233, 9%, 25%)"),
+        pageButtonActiveStyle = list(backgroundColor = "hsl(233, 9%, 28%)")
+      )
+    )
+  } else {
+   flextable(top5_df) |> 
+    bold(part = "header")
+  }
+} else {
+  print("No data available for top 5 results.")
+}
+```
+
+
+---
+
+## Visualization
+```{r top5_chart, fig.width=10, fig.height=6}
+if (!is.null(params$biggest_5_column_names) && !is.null(params$biggest_5_column_values)) {
+  top5_df <- data.frame(
+    Category = params$biggest_5_column_names,
+    Value = params$biggest_5_column_values
+  )
+  
+  ggplot(top5_df, aes(x = reorder(Category, Value), y = Value)) +
+    geom_col(fill = "#3498db", alpha = 0.8) +
+    geom_text(aes(label = round(Value, 2)), hjust = -0.2, size = 4) +
+    coord_flip() +
+    labs(
+      title = "Top 5 Categories by Value",
+      x = "Category",
+      y = "Value"
+    ) +
+    theme_minimal() +
+    theme(
+      plot.title = element_text(size = 16, face = "bold"),
+      axis.title = element_text(size = 12),
+      axis.text = element_text(size = 10)
+    )
+} else {
+  print("No data available for visualization.")
+}
+```
+
+
+
+---
+
+
+## Report Information
+
+- **Generated:** `r format(Sys.time(), '%Y-%m-%d %H:%M:%S')`
+- **Total Records:** `r if(!is.null(params$df)) nrow(params$df) else 0`
+- **Columns:** `r if(!is.null(params$df)) paste(names(params$df), collapse = ", ") else "N/A"`
