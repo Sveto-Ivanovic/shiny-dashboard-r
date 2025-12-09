@@ -1,3 +1,4 @@
+
 # Understanding the shiny-dashboard-r Project
 
 This document provides a comprehensive overview of the `shiny-dashboard-r` project, a Shiny application for data visualization and reporting. The following guide is tailored for **Ubuntu 22.04** and is intended as a learning experience to understand the structure and functionality of this R-based web application.
@@ -12,13 +13,15 @@ The project demonstrates best practices in Shiny development, such as modulariza
 
 The application offers the following key features:
 
-| Feature | Description |
-|---|---|
-| **Data Loading** | The application can load and process multiple CSV files from a designated `dataset` directory. |
-| **Interactive Tables** | Users can view and select from the loaded datasets, which are presented in an interactive table format. |
-| **Statistical Analysis** | The application provides tools for performing statistical calculations and aggregations on the selected data. |
-| **Report Generation** | Users can generate and download reports in both Microsoft Word (.docx) and Excel (.xlsx) formats. |
-| **Customizable UI** | The user interface is built with a custom theme and is organized into a multi-tab layout for ease of navigation. |
+| Feature                  | Description                                                                                                      |
+| ------------------------ | ---------------------------------------------------------------------------------------------------------------- |
+| **Data Loading**         | The application can load and process multiple CSV files from a designated `dataset` directory.                   |
+| **Interactive Tables**   | Users can view and select from the loaded datasets, which are presented in an interactive table format.          |
+| **Statistical Analysis** | The application provides tools for performing statistical calculations and aggregations on the selected data.    |
+| **Report Generation**    | Users can generate and download reports in both Microsoft Word (.docx) and Excel (.xlsx) formats.                |
+| **Customizable UI**      | The user interface is built with a custom theme and is organized into a multi-tab layout for ease of navigation. |
+
+---
 
 ## Getting Started on Ubuntu 22.04
 
@@ -37,56 +40,99 @@ install.packages("webshot")
 webshot::install_phantomjs()
 ```
 
-Then, you will need to install several system libraries that are required by the R packages used in this project. Open a terminal and run the following commands:
+Then, install system libraries required by the R packages used in this project:
 
 ```bash
 sudo apt-get update
 sudo apt-get install libcairo2-dev libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev libharfbuzz-dev libfribidi-dev libwebp-dev
 ```
 
-The project also uses a number of R packages for its functionality. These are listed in the `global.R` file and are managed by the `renv` package. When you first open the project in RStudio, `renv` should prompt you to install the required packages. If not, you can install them manually by running the following in an R session within the project directory:
+---
 
-```R
+## Installing R Packages Using `renv.lock` (Recommended)
+
+This project uses **renv** to ensure that all required R packages are installed with the exact versions used by the developer.
+
+After cloning the repository (see next section), follow these steps:
+
+### 1. Install the `renv` package (if not already installed)
+
+```r
+install.packages("renv")
+```
+
+### 2. Set your working directory to the project folder
+
+```r
+setwd("path/to/shiny-dashboard-r")
+```
+
+### 3. Restore all packages listed in `renv.lock`
+
+```r
 renv::restore()
 ```
-Additionally you might need to install other system libraries that are not present here, but will be intuitive to install via warnings/errors when using ```renv::restore()```.
+
+What this does:
+
+* Reads the `renv.lock` file
+* Installs the exact package versions needed
+* Recreates the project’s isolated R library in `renv/library/`
+* Ensures full reproducibility
+
+If any system libraries are missing, `renv` will show clear error messages.
+Simply install the missing system packages via `apt`, then run:
+
+```r
+renv::restore()
+```
+
+again.
+
+---
 
 ### Downloading and Running the Application
 
-1.  **Download the repository:**
+1. **Download the repository:**
 
-    You can download the project files using `git`. Open a terminal and run:
+```bash
+git clone https://github.com/Sveto-Ivanovic/shiny-dashboard-r.git
+```
 
-    ```bash
-    git clone https://github.com/Sveto-Ivanovic/shiny-dashboard-r.git
-    ```
+2. **Navigate to the project directory:**
 
-2.  **Navigate to the project directory:**
+```bash
+cd shiny-dashboard-r
+```
 
-    ```bash
-    cd shiny-dashboard-r
-    ```
+3. **Install packages via renv (if not done yet):**
 
-3.  **Run the application:**
+```r
+renv::restore()
+```
 
-    You can run the application by opening the `ui.R`, `server.R`, or `global.R` file in RStudio and clicking the "Run App" button. Alternatively, you can run the following command in an R session from within the project directory:
+4. **Run the application:**
 
-    ```R
-    shiny::runApp()
-    ```
+In RStudio, click **Run App**, or run this from an R session:
+
+```r
+shiny::runApp()
+```
+
+---
 
 ## Code Structure Explained
 
 The project is organized into several files and directories, each with a specific purpose. This modular structure makes the code easier to understand, maintain, and extend.
 
-| File/Directory | Description |
-|---|---|
-| `global.R` | This file is executed before the application starts. It loads all the necessary libraries and sources the initial data. |
-| `ui.R` | This file defines the user interface of the application. It sets up the layout, navigation, and includes the UI components from the `components/` directory. |
-| `server.R` | This file contains the server-side logic of the application. It handles user input, performs calculations, and generates the output that is displayed in the UI. |
-| `components/` | This directory contains the modular UI components that are used to build the user interface. Each file in this directory defines a specific part of the UI. |
-| `functions/` | This directory contains the modular server-side functions that are called from the `server.R` file. This helps to keep the server logic organized and reusable. |
-| `dataset/` | This is where the application looks for CSV files to load. You can place your own CSV files in this directory to analyze them with the application. |
-| `renv/` | This directory is managed by the `renv` package and contains the project's private R library. This ensures that the project uses the correct versions of the required packages. |
-| `renv.lock` | This file records the exact versions of all R packages used in the project, ensuring reproducibility. |
-| `www/` | This directory is for web assets such as CSS files, images, and JavaScript files. |
+| File/Directory | Description                                                       |
+| -------------- | ----------------------------------------------------------------- |
+| `global.R`     | Loaded before the app starts. Imports libraries and initial data. |
+| `ui.R`         | Defines the user interface layout and components.                 |
+| `server.R`     | Contains the server-side logic and reactive processes.            |
+| `components/`  | Modular UI components used to build the application.              |
+| `functions/`   | Modular server functions for clean, reusable logic.               |
+| `dataset/`     | Contains CSV files used by the app.                               |
+| `renv/`        | Managed by renv; stores the project’s isolated package library.   |
+| `renv.lock`    | Defines exact package versions for reproducibility.               |
+| `www/`         | Contains web assets like CSS, JavaScript, images.                 |
